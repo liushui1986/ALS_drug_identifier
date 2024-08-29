@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drug Identifier Prediction System</title>
+    <title>Drug Identifier System</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container">
-        <h1 class="mt-5">Drug Identifier Prediction System</h1>
-        <form id="drug-form" method="POST" action="/predict">
-            <!-- Add form fields for each descriptor used in your model -->
-            <!-- Example fields (add more as needed) -->
+        <h1 class="mt-5">Drug Identifier System</h1>
+        <form id="drug-form" method="POST" action="/predict" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="desc1">Descriptor 1</label>
-                <input type="number" step="0.01" class="form-control" id="desc1" name="desc1" required>
+                <label for="smiles">SMILES String</label>
+                <textarea class="form-control" id="smiles" name="smiles" rows="3"></textarea>
             </div>
-            <!-- Add more fields as per your descriptors -->
+            <div class="form-group">
+                <label for="file">CSV File: keep only one column named 'SMILES'</label>
+                <input type="file" class="form-control-file" id="file" name="file">
+            </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 
@@ -25,6 +26,10 @@
             <h3>Prediction Result</h3>
             <p>The prediction is: <strong>{{ result }}</strong></p>
             <p>Probability of being a good drug: <strong>{{ probability }}</strong></p>
+        </div>
+        {% elif error %}
+        <div class="mt-4 alert alert-danger">
+            <p>{{ error }}</p>
         </div>
         {% endif %}
     </div>
